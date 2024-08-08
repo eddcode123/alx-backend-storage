@@ -1,6 +1,6 @@
--- Check if the table exists and create it if it doesn't with this fileds
+-- Script that creates a table users following these requirements:
 -- id, email, name, country(enumeration of US, CO and TN)
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users(
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     email varchar(255) UNIQUE NOT NULL,
     name varchar(255)
