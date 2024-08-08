@@ -1,6 +1,7 @@
--- Check if the table exists and create it if it doesn't
+-- Check if the table exists and create it if it doesn't with this fileds
+-- id, email, name
 CREATE TABLE IF NOT EXISTS users (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    name VARCHAR(255)
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email varchar(255) UNIQUE NOT NULL,
+    name varchar(255)
 );
