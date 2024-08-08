@@ -15,3 +15,4 @@ BEGIN
   SET U.average_score = WA.w_avg 
   WHERE U.id=WA.id;
 END;
+DELIMITER ;
