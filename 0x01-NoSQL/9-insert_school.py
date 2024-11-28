@@ -12,5 +12,5 @@ def insert_school(mongo_collection, **kwargs):
         id: The ID of the inserted document.
     """
     # Insert kwargs in mongo_collection
-    result = mongo_collection.insertOne(kwargs)
+    result = mongo_collection.insert_many(kwargs)
     return result.inserted_ids
