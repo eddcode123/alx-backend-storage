@@ -1,2 +1,2 @@
-// Return no of documents in a collection
+// Return count of documents in a collection
 db.school.countDocuments()
