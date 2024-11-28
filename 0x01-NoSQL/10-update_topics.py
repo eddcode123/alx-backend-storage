@@ -13,6 +13,6 @@ def update_topics(mongo_collection, name, topics):
         Update result (dict): Contains information about the update operation.
     """
     mongo_collection.update_many(
-        { "name": name },
-        { '$set': { "topics": topics } }
+        {"name": name},
+        {'$set': {"topics": topics}}
     )
