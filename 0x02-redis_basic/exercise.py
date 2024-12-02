@@ -4,6 +4,7 @@
 import redis
 import uuid
 from typing import Union, Callable, Optional
+import sys
 
 unionTypes = Union[str, bytes, int, float]
 
@@ -52,4 +53,4 @@ class Cache:
 
     def get_int(self: bytes) -> int:
         """Get integer"""
-        return int(self)
+        return int.from_bytes(self, sys.byteorder)
