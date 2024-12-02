@@ -4,6 +4,7 @@
 import redis
 import uuid
 from typing import Any
+import json
 
 
 class Cache:
@@ -26,5 +27,5 @@ class Cache:
             Key(Str): The key generated
         """
         key = str(uuid.uuid4())
-        self._redis.set(key, data)
+        self._redis.set(key, json.dumps(data))
         return key
