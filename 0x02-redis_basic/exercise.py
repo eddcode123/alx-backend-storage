@@ -32,7 +32,7 @@ class Cache:
         self._redis.mset({key: data})
         return key
 
-    def get(self, Key: str, fn: Optional[Callable]) \
+    def get(self, Key: str, fn: Optional[Callable] = None) \
             -> unionTypes:
         """
         convert the data back
