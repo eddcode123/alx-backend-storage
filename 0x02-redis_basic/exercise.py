@@ -3,7 +3,7 @@
 
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable, Optional
 
 unionTypes = Union[str, bytes, int, float]
 
@@ -30,3 +30,26 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.mset({key: data})
         return key
+    
+    def get(self, Key: str, fn: Optional[Callable]) \
+        -> unionTypes:
+        """
+        convert the data back
+        to the desired format
+        Args:
+            key (str): key to retive value
+            fn (Callable): function to convert bytes to string
+        Returns:
+            data (unionTypes): data associated to the key 
+        """
+        if fn:
+            return fn(self._redis.get(Key))
+        return self._redis.get(Key)
+    
+    def get_str(self: bytes) -> str:
+        """Get string"""
+        return self.decode('utf-8')
+    
+    def get_int(self: bytes) -> int:
+        """Get integer"""
+        return int(self)
