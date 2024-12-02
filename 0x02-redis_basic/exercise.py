@@ -16,7 +16,7 @@ class Cache:
         self._redis = redis.Redis()
         # flush the instance
         self._redis.flushdb()
-    
+
     def store(self, data: Any) -> str:
         """Method that stores the input data in Redis
         using the random key and return the key
