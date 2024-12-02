@@ -4,7 +4,6 @@
 import redis
 import uuid
 from typing import Any
-import pickle
 
 
 class Cache:
@@ -27,5 +26,5 @@ class Cache:
             Key(Str): The key generated
         """
         key = str(uuid.uuid4())
-        self._redis.set(key, pickle.dumps(data))
+        self._redis.mset({key: data})
         return key
