@@ -46,11 +46,11 @@ class Cache:
         if fn:
             return fn(self._redis.get(Key))
         return self._redis.get(Key)
+    
+    def get_int(self: bytes) -> int:
+        """get a number"""
+        return int.from_bytes(self, sys.byteorder)
 
     def get_str(self: bytes) -> str:
         """Get string"""
         return self.decode('utf-8')
-
-    def get_int(self: bytes) -> int:
-        """Get integer"""
-        return int.from_bytes(self, sys.byteorder)
