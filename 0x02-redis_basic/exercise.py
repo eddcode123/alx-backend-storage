@@ -10,63 +10,36 @@ import sys
 unionTypes = Union[str, bytes, int, float]
 
 
-def count_calls(method: callable) -> callable:
+def count_calls(method: Callable) -> Callable:
     """
     Decorator to count the number of times a method is called.
     Stores the count in a Redis database using the method's qualified name.
-    Args:
-        method (callable): The method to be wrapped.
-    Returns:
-        callable: The wrapped method with call counting.
     """
     key = method.__qualname__
 
     @wraps(method)
     def wrapper(self, *args, **kwargs):
-        """
-        Wrapper function to increment the call count in Redis
-        before executing the original method.
-        Args:
-            self: The instance of the class containing the method.
-            *args: Positional arguments for the method.
-            **kwargs: Keyword arguments for the method.
-        Returns:
-            The return value of the original method.
-        """
+        """Wrapper function to increment the call count in Redis."""
         self._redis.incr(key)
-        return method(self, *args, *kwargs)
+        return method(self, *args, **kwargs)
 
     return wrapper
 
 
 def call_history(method: Callable) -> Callable:
     """
-    decorator to store the history of inputs and
-    outputs for a particular function
-    Args:
-        method (callable): The method to be wrapped.
-    Returns:
-        The return value of the original method
+    Decorator to store the history of inputs and outputs for a function.
     """
     key = method.__qualname__
-    i = "".join([key, ":inputs"])
-    o = "".join([key, ":outputs"])
+    inputs_key = f"{key}:inputs"
+    outputs_key = f"{key}:outputs"
 
     @wraps(method)
-    def wrapper(self, *args, **kwags):
-        """Wrapper function to append input params and output
-        result to alist in Redis
-        before executing the original method.
-        Args:
-            self: The instance of the class containing the method.
-            *args: Positional arguments for the method.
-            **kwargs: Keyword arguments for the method.
-        Returns:
-            The return value of the original method.
-        """
-        self._redis.rpush(i, str(args))
-        result = method(self, *args, **kwags)
-        self._redis.rpush(o, str(result))
+    def wrapper(self, *args, **kwargs):
+        """Wrapper function to log inputs and outputs in Redis."""
+        self._redis.rpush(inputs_key, str(args))
+        result = method(self, *args, **kwargs)
+        self._redis.rpush(outputs_key, str(result))
         return result
 
     return wrapper
